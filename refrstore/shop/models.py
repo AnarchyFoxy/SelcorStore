@@ -13,7 +13,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-class Product(model.Model):
+class Product(models.Model):
     #category - foregin key for Category relation one to many
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
     #product name
@@ -34,7 +34,7 @@ class Product(model.Model):
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ('name')
+        ordering = ('name',)
         index_together = (('id', 'slug'))
 
     def __str__(self):
