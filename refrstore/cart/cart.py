@@ -53,3 +53,8 @@ class Cart(object):
     def get_total_price(self):
         """Obliczanie sumy całkowitej ceny produktów w koszyku"""
         return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
+
+    def clear(self):
+        """Usuwanie koszyka na zakupy w sesji"""
+        del self.session[sessings.CART.SESSION.ID]
+        self.save()
