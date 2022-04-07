@@ -4,7 +4,7 @@ from shop.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
 
-# Widok dla dodawania produktu do koszyka
+# Widok dla dodawania lub aktualizacji produktu do koszyka
 @require_POST
 def cart_add(request, product_id):
     cart = Cart(request)
@@ -14,3 +14,17 @@ def cart_add(request, product_id):
         cd = form.cleaned_data
         cart.add(product=product, quantity=cd['quantity'], update_quantity=cd['update'])
     return redirect('cart:cart_detail')
+
+# Widok dla usunięcia produktu z koszyka
+@require_POST
+
+def cart_remove(request, product_id):
+    cart = Cart(request)
+    product = get_object_or_404(Prouct, id=product_id)
+    cart.remove(product)
+    return redirect('cart:cart_detail')
+
+# Widok wyświetający zawartość koszyka na zakupy
+def cart_detail(request):
+    cart = Cart(request)
+    return render(request, 'cart/detail.html', {'cart': cart})
