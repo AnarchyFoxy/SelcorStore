@@ -2,10 +2,10 @@ from django.shortcuts import render
 from .models import OrderItem
 from .forms import OrderCreateForm
 from cart.cart import Cart
+from .tasks import order_created
 
-# Widoki dla zamówień
-# 251
 
+# View for creating order
 def order_create(request):
     cart = Cart(request)
     if request.method == 'POST':
@@ -13,9 +13,19 @@ def order_create(request):
         if form.is_valid():
             order = form.save()
             for item in cart:
-                OrderItem.objects.create(order=order, product=item['product'], price=item['price'], quantity=item['quantity'])
-            # Usunięcie zawartości koszyka na zakupy
-            cart.clear()
-            return render(request, 'orders/order/created.html', {'order': order})
-        else:
-            return render(request, 'order/order/create.html', {'cart': cart, 'form': form})
+                OrderItem.objects.create(order=order,
+                                         product=item['product'],
+                                         price=item['price'],
+                                         quantity=item['quantity'])
+                # Removing content of the cart
+                cart.clear()
+                # Firing asynchronous action
+                order_created.delay(order.id)
+                return render(request,
+                              'orders/order/created.html',
+                              {'order': order})
+    else:
+        form = OrderCreateForm()
+    return render(request,
+                  'orders/order/create.html',
+                  {'cart': cart, 'form': form})

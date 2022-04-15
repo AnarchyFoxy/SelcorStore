@@ -1,7 +1,6 @@
 from django.urls import path
 from . import views
 
-# Wzorzec url dla widoku order_create
 app_name = 'orders'
 
 urlpatterns = [
