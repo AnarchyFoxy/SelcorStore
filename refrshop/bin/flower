@@ -1,4 +1,4 @@
-#!/home/refrasta/IDE/Atom/Django/Refrshop/refrshop/bin/python3
+#!/home/refrasta/IDE/Atom/Django/Refrstore/refrshop/bin/python3
 # EASY-INSTALL-ENTRY-SCRIPT: 'flower==0.9.3','console_scripts','flower'
 import re
 import sys

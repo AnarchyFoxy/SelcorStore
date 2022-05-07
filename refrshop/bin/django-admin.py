@@ -1,4 +1,4 @@
-#!/home/refrasta/IDE/Atom/Django/Refrshop/refrshop/bin/python3
+#!/home/refrasta/IDE/Atom/Django/Refrstore/refrshop/bin/python3
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 
