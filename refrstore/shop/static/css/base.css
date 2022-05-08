@@ -1,5 +1,11 @@
 @import url(//fonts.googleapis.com/css?family=Ubuntu);
 
+/* Own */
+.navbar-brand img {
+    height: 1.8rem;
+}
+/* Main */
+
 body {
     margin:0;
     padding:0;
