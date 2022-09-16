@@ -31,7 +31,7 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['selcor.eu-west-1.elasticbeanstalk.com',]
+ALLOWED_HOSTS = ['*',]
 
 
 # Application definition
