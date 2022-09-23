@@ -37,7 +37,7 @@ steps:
   args:
     - '-c'
     - |
-      docker build -t eu.gcr.io/$PROJECT_ID/$BUILD_ID --build-arg SECRET_KEY=$$SECRET_KEY -f Docker .
+      docker build -t eu.gcr.io/$PROJECT_ID/$BUILD_ID --build-arg SECRET_KEY=$$SECRET_KEY -f /workspace/Docker .
   secretEnv: ['SECRET_KEY']
 
 # Push the container image to Container Registry
