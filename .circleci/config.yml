@@ -2,7 +2,7 @@ version: 2.1
 
 
 orbs:
-  rollbar: rollbar/deploy@1.0.1
+  # rollbar: rollbar/deploy@1.0.1
   gcp-cli: circleci/gcp-cli@2.4.1
 
 jobs:
