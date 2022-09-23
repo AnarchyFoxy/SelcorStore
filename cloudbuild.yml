@@ -1,0 +1,26 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args:
+    - '-c'
+    - |
+      docker build -t eu.gcr.io/$PROJECT_ID/refrstore:$BUILD_ID -f .
+
+# - name: 'eu.gcr.io/$PROJECT_ID/refrstore:$BUILD_ID'
+#   entrypoint: 'sh'
+#   args:
+#   - '-c'
+#   - |
+#     yarn audit || true
+# - name: 'aquasec/trivy'
+#   args: ['image', 'eu.gcr.io/$PROJECT_ID/refrstore:$BUILD_ID']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'eu.gcr.io/$PROJECT_ID/refrstore:$BUILD_ID']
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: ['run', 'deploy', 'selcorstore', '--image', 'eu.gcr.io/$PROJECT_ID/refrstore:$BUILD_ID', '--region', 'europe-north1']
+
+images:
+- 'eu.gcr.io/$PROJECT_ID/refrstore:$BUILD_ID'
+
+timeout: 800s

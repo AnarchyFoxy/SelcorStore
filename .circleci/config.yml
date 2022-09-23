@@ -1,4 +1,10 @@
 version: 2.1
+
+
+orbs:
+  rollbar: rollbar/deploy@1.0.1
+  gcp-cli: circleci/gcp-cli@2.4.1
+
 jobs:
  test:
    working_directory: ~/refrstore
@@ -26,6 +32,27 @@ jobs:
          name: Deploying application to Elastic Beanstalk
          command: eb deploy
 
+ deploy-gcp:
+   working_directory: ~/refrstore
+   executor: gcp-cli/default
+   parameters:
+      google-project-id:
+        type: env_var_name
+        default: GOOGLE_PROJECT_ID
+      gcloud-service-key:
+        type: env_var_name
+        default: GCLOUD_SERVICE_KEY
+   steps:
+      - checkout
+      - gcp-cli/install
+      - gcp-cli/initialize:
+          google-project-id: GOOGLE_PROJECT_ID
+          gcloud-service-key: << parameters.gcloud-service-key >>
+      - run:
+          name: Deploy to Cloud Build Production
+          command: |
+            gcloud builds submit --async --config=cloudbuild.yaml .
+
          
 workflows:
  version: 2.1
@@ -39,3 +66,10 @@ workflows:
             branches:
               only:
                 - master
+     - deploy-gcp:
+         requires:
+           - test
+         filters:
+            branches:
+              only:
+                - GCP-Deployment
