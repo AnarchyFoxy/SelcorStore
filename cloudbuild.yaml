@@ -50,10 +50,10 @@ steps:
   args: ['run', 'deploy', 'selcorstore', '--image', 'gcr.io/$PROJECT_ID/$BUILD_ID', '--region', 'europe-north1']
 
 
-availableSecrets:
-  secretManager:
-  - versionName: projects/$PROJECT_NUMBER/secrets/SECRET_KEY/versions/1
-    env: 'SECRET_KEY'
+# availableSecrets:
+#   secretManager:
+#   - versionName: projects/$PROJECT_NUMBER/secrets/SECRET_KEY/versions/1
+#     env: 'SECRET_KEY'
 
 
 images:
